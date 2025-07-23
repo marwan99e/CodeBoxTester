@@ -236,11 +236,17 @@ public class MyTestCases {
 			
 		}
 		int RandomNumber = rand.nextInt();
-		driver.findElement(By.id("name1")).sendKeys(FirstName);
-		driver.findElement(By.id("secondname1")).sendKeys(LastName);
-		driver.findElement(By.id("email1")).sendKeys(FirstName+LastName+RandomNumber+"@gmail.com");
-		driver.findElement(By.id("phone1")).sendKeys(Phone);
-		driver.findElement(By.id("details1")).sendKeys(Company);
+		WebElement FirstNameInput =driver.findElement(By.id("name1"));
+		WebElement LastNameInput =driver.findElement(By.id("secondname1"));
+		WebElement EmailInput =driver.findElement(By.id("email1"));
+		WebElement PhoneInput =driver.findElement(By.id("phone1"));
+		WebElement DetailsInput =driver.findElement(By.id("details1"));
+		
+		FirstNameInput.sendKeys(FirstName);
+		LastNameInput.sendKeys(LastName);
+		EmailInput.sendKeys(FirstName+LastName+RandomNumber+"@gmail.com");
+		PhoneInput.sendKeys(Phone);
+		DetailsInput.sendKeys(Company);
 
 
 	}
