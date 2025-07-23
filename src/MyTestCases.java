@@ -1,9 +1,16 @@
 import java.awt.Desktop.Action;
+
 import java.nio.channels.SelectableChannel;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.openqa.selenium.By;
@@ -21,9 +28,21 @@ public class MyTestCases {
 
 	WebDriver driver = new ChromeDriver();
 	String TheURL = "https://codenboxautomationlab.com/practice/";
+	
+	Connection con ;
+	Statement stmt;
+	ResultSet rs ;
+	String FirstName ;
+	String LastName ;
+	String Phone ;
+	String Company ;
+	Random rand = new Random();
+	
 
 	@BeforeTest
-	public void MySetup() {
+	public void MySetup() throws SQLException {
+		
+		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/classicmodels", "root", "123456");
 
 		driver.get(TheURL);
 		driver.manage().window().maximize();
@@ -188,7 +207,7 @@ public class MyTestCases {
 		
 	}
 	@Test
-	public void Calendar() {
+	public void Calendar() throws InterruptedException, SQLException {
 
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollTo(0,1900)");
@@ -202,6 +221,27 @@ public class MyTestCases {
 		
 		WebElement NumberOfTheCalendar = driver.findElement(By.linkText("24"));
 		NumberOfTheCalendar.click();
+		
+		Thread.sleep(2000);
+		int randomID = rand.nextInt(124,126);
+		
+		String QueryToRead  = "select * from customers where customerNumber =  "+randomID;
+		stmt = con.createStatement();
+		rs = stmt.executeQuery(QueryToRead);
+		while(rs.next()) {
+			FirstName = rs.getString("contactFirstName");
+			LastName = rs.getString("contactLastName");
+			Phone = rs.getString("phone");
+			Company= rs.getString("customerName");
+			
+		}
+		int RandomNumber = rand.nextInt();
+		driver.findElement(By.id("name1")).sendKeys(FirstName);
+		driver.findElement(By.id("secondname1")).sendKeys(LastName);
+		driver.findElement(By.id("email1")).sendKeys(FirstName+LastName+RandomNumber+"@gmail.com");
+		driver.findElement(By.id("phone1")).sendKeys(Phone);
+		driver.findElement(By.id("details1")).sendKeys(Company);
+
 
 	}
 

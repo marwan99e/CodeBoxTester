@@ -2,16 +2,16 @@
 <testng-results ignored="11" total="12" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-07-22T15:45:01 EET" name="Default suite" finished-at="2025-07-22T15:45:11 EET" duration-ms="9745">
+  <suite started-at="2025-07-23T19:21:35 EET" name="Default suite" finished-at="2025-07-23T19:21:52 EET" duration-ms="16737">
     <groups>
     </groups>
-    <test started-at="2025-07-22T15:45:01 EET" name="Default test" finished-at="2025-07-22T15:45:11 EET" duration-ms="9745">
+    <test started-at="2025-07-23T19:21:35 EET" name="Default test" finished-at="2025-07-23T19:21:52 EET" duration-ms="16737">
       <class name="MyTestCases">
-        <test-method is-config="true" signature="MySetup()[pri:0, instance:MyTestCases@625e134e]" started-at="2025-07-22T15:45:01 EET" name="MySetup" finished-at="2025-07-22T15:45:09 EET" duration-ms="7935" status="PASS">
+        <test-method is-config="true" signature="MySetup()[pri:0, instance:MyTestCases@1a1da881]" started-at="2025-07-23T19:21:35 EET" name="MySetup" finished-at="2025-07-23T19:21:47 EET" duration-ms="12206" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- MySetup -->
-        <test-method signature="Calendar()[pri:0, instance:MyTestCases@625e134e]" started-at="2025-07-22T15:45:09 EET" name="Calendar" finished-at="2025-07-22T15:45:11 EET" duration-ms="1772" status="PASS">
+        <test-method signature="Calendar()[pri:0, instance:MyTestCases@1a1da881]" started-at="2025-07-23T19:21:47 EET" name="Calendar" finished-at="2025-07-23T19:21:52 EET" duration-ms="4491" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Calendar -->

@@ -6,7 +6,7 @@
       <class name="MyTestCases">
         <methods>
           <include name="MySetup"/>
-          <include name="ElementDisplayed"/>
+          <include name="Calendar"/>
         </methods>
       </class> <!-- MyTestCases -->
     </classes>
