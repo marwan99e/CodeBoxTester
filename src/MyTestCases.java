@@ -1,5 +1,6 @@
 import java.awt.Desktop.Action;
-
+import java.io.File;
+import java.io.IOException;
 import java.nio.channels.SelectableChannel;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,14 +9,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -37,6 +42,7 @@ public class MyTestCases {
 	String Phone ;
 	String Company ;
 	Random rand = new Random();
+	int RandomID;
 	
 
 	@BeforeTest
@@ -206,8 +212,40 @@ public class MyTestCases {
 		ReloadInput.click();
 		
 	}
-	@Test
-	public void Calendar() throws InterruptedException, SQLException {
+	@Test(priority = 1)
+	public void AddData() throws SQLException {
+		RandomID = rand.nextInt(4606,6550);
+		
+		String QueryAddData = "INSERT INTO customers (" + "customerNumber, " + "customerName, " + "contactLastName, "
+				+ "contactFirstName, " + "phone, " + "addressLine1, " + "addressLine2, " + "city, " + "state, "
+				+ "postalCode, " + "country, " + "salesRepEmployeeNumber, " + "creditLimit" + ") VALUES (" + RandomID
+				+ "," + "'Tech Solutions Ltd.', " + "'Smith', " + "'John', " + "'+1 800 555 1234', "
+				+ "'123 Tech Park', " + "'Suite 400', " + "'San Francisco', " + "'CA', " + "'94107', " + "'USA', "
+				+ "1166, " + "100000.00" + ");";
+		stmt = con.createStatement();
+		int rowInserted =stmt.executeUpdate(QueryAddData);
+		System.out.println(rowInserted);
+		
+		
+		
+	}
+	@Test(priority = 2)
+	public void UpdateData() throws SQLException {
+		
+		String QueryUpdateData = "UPDATE customers " +
+                "SET contactFirstName = 'marwan', " +
+                "contactLastName = 'alrawashdeh' " +
+                "WHERE customerNumber = " + RandomID;
+
+		stmt = con.createStatement();
+		int rowInserted =stmt.executeUpdate(QueryUpdateData);
+		System.out.println(rowInserted);
+	
+	}
+	
+	
+	@Test(priority = 3)
+	public void Calendar() throws InterruptedException, SQLException, IOException {
 
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollTo(0,1900)");
@@ -223,7 +261,9 @@ public class MyTestCases {
 		NumberOfTheCalendar.click();
 		
 		Thread.sleep(2000);
+		
 		int randomID = rand.nextInt(124,126);
+		
 		
 		String QueryToRead  = "select * from customers where customerNumber =  "+randomID;
 		stmt = con.createStatement();
@@ -233,6 +273,7 @@ public class MyTestCases {
 			LastName = rs.getString("contactLastName");
 			Phone = rs.getString("phone");
 			Company= rs.getString("customerName");
+			
 			
 		}
 		int RandomNumber = rand.nextInt();
@@ -247,8 +288,46 @@ public class MyTestCases {
 		EmailInput.sendKeys(FirstName+LastName+RandomNumber+"@gmail.com");
 		PhoneInput.sendKeys(Phone);
 		DetailsInput.sendKeys(Company);
+		System.out.println(RandomID);
+		TakeAscreenShot() ;
 
 
+	}
+	@Test(priority = 4 )
+	public void DeleteData() throws SQLException, IOException, InterruptedException {
+		
+		
+		String QueryToDelete = "DELETE FROM customers WHERE customerNumber = " + RandomID + ";";
+
+		stmt = con.createStatement();
+		int rowInserted =stmt.executeUpdate(QueryToDelete);
+		System.out.println(rowInserted);
+		TakeAscreenShot() ;
+	
+	}
+	
+	@Test(priority = 5)
+	public void TakeAscreenShot () throws IOException, InterruptedException {
+		Date timestamp = new Date();
+		String newtimestamp = timestamp.toString().replace(":", "-");
+		
+		TakesScreenshot ts = (TakesScreenshot) driver;
+
+		File file = ts.getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(file, new File("./ScreenShot_Folder/" + newtimestamp + ".jpg"));
+		
+		
+		JavascriptExecutor js  = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0,600)");
+		Date timestamp2 = new Date();
+		String newtimestamp2 = timestamp2.toString().replace(":", "-");
+		Thread.sleep(1000);
+		TakesScreenshot ts1 = (TakesScreenshot) driver;
+
+		File file2 = ts1.getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(file2, new File("./ScreenShot_Folder/" + newtimestamp2 + ".jpg"));
+		
+		
 	}
 
 }

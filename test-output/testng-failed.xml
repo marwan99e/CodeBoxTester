@@ -6,7 +6,7 @@
       <class name="MyTestCases">
         <methods>
           <include name="MySetup"/>
-          <include name="Calendar"/>
+          <include name="AddData"/>
         </methods>
       </class> <!-- MyTestCases -->
     </classes>
